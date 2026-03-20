@@ -3,6 +3,12 @@ node_modules/
 dist/
 build/
 *.js
+<<<<<<< HEAD
+=======
+*.map
+*.d.ts
+*.d.ts.map
+>>>>>>> 787c3b8 (feat: initial release of JIRA-AI Agent v10.2 (transparent reasoning & premium UI))
 !frontend/src/components/**/*.js
 
 # Environment

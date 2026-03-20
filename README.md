@@ -1,5 +1,6 @@
 # 🚀 JIRA-AI: Transparent Reasoning Agent
 
+<<<<<<< HEAD
 A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.
 
 ## 🌟 Key Features (v10)
@@ -24,6 +25,35 @@ The JIRA-AI agent is designed to handle natural language as if you were talking 
 | **Add Comment** | "Tell the team on KAN-5 that the API is ready" | IssueKey: KAN-5, Text: "the API is ready" |
 | **Assign User** | "Assign KAN-10 to Himanshu" | Calls `searchUser` -> extracts AccountId -> `updateIssue` |
 
+=======
+![JIRA-AI Dashboard Mockup](file:///Users/himanshu/.gemini/antigravity/brain/ba823c7d-d2e9-4a23-bcd1-17e74a2da7e3/jira_ai_dashboard_mockup_1773998591624.png)
+*Modern, Glassmorphic AI Command Center for Jira*
+
+A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.
+
+## 🌟 Key Features (v10)
+
+- **Execution Logs (Transparency)**: Watch the agent's "Internal Thoughts" in real-time. No more guessing—see exactly which JQL is being run or which task is being updated.
+- **Parallel Tooling (Performance)**: Handles complex, multi-action requests (e.g., "Create 3 tickets and move KAN-5 to Done") in a single parallel execution pass.
+- **Agent-Grade Data**: Automated Markdown Table generation for all summaries and task lists.
+- **Premium Glassmorphism**: A stunning, curvy UI with deep shadows, translucency, and organic animations.
+- **Active Task Scroller**: Professional-grade task management sidebar that stays synced with your assigned Jira issues.
+
+## 🎯 User Capabilities & Command Reference
+
+The JIRA-AI agent is designed to handle natural language as if you were talking to a project manager. Below is the full matrix of supported actions.
+
+### 1. Capability Matrix
+| Action | Example Command | Data Extracted |
+| :--- | :--- | :--- |
+| **Search Tickets** | "Find all high priority bugs in KAN project" | JQL: `project=KAN AND priority=High AND type=Bug` |
+| **Summarize Work**| "Give me a summary of my assigned tasks" | Identity-linked JQL + AI Summary Table |
+| **Create Issue** | "Create a story in APP: Add login with Google" | Summary: "Add login with Google", Type: Story, Project: APP |
+| **Update Status** | "Move APP-123 to In Progress" | IssueKey: APP-123, TargetStatus: "In Progress" |
+| **Add Comment** | "Tell the team on KAN-5 that the API is ready" | IssueKey: KAN-5, Text: "the API is ready" |
+| **Assign User** | "Assign KAN-10 to Himanshu" | Calls `searchUser` -> extracts AccountId -> `updateIssue` |
+
+>>>>>>> 787c3b8 (feat: initial release of JIRA-AI Agent v10.2 (transparent reasoning & premium UI))
 ### 2. Smart Extraction Logic
 - **Auto-Summarization**: If you send a long paragraph about a bug, JIRA-AI automatically distills it into a professional 5-word title for the ticket and keeps the original text as the description.
 - **Priority Detection**: Words like "urgent", "critical", or "p1" automatically set the ticket priority to **Highest**.
