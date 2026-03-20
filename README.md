@@ -65,7 +65,6 @@ The JIRA-AI agent is designed to handle natural language as if you were talking 
 | **Add Comment** | "Tell the team on KAN-5 that the API is ready" | IssueKey: KAN-5, Text: "the API is ready" |
 | **Assign User** | "Assign KAN-10 to Himanshu" | Calls `searchUser` -> extracts AccountId -> `updateIssue` |
 
->>>>>>> 787c3b8 (feat: initial release of JIRA-AI Agent v10.2 (transparent reasoning & premium UI))
 ### 2. Smart Extraction Logic
 - **Auto-Summarization**: If you send a long paragraph about a bug, JIRA-AI automatically distills it into a professional 5-word title for the ticket and keeps the original text as the description.
 - **Priority Detection**: Words like "urgent", "critical", or "p1" automatically set the ticket priority to **Highest**.
