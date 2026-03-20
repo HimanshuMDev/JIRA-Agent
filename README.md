@@ -1,7 +1,23 @@
-# 🚀 JIRA-AI: Transparent Reasoning Agent
+<div align="center">
 
-<<<<<<< HEAD
-A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.
+# 🚀 JIRA-AI
+**Transparent Reasoning & Parallel Execution Agent**
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Gemini](https://img.shields.io/badge/Gemini_2.0-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=for-the-badge)](https://opensource.org/licenses/ISC)
+
+<br />
+
+<img src="https://raw.githubusercontent.com/HimanshuMDev/JIRA-Agent/main/frontend/dashboard.png" width="900px" alt="JIRA-AI Dashboard Mockup" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+
+<br />
+
+### *A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.*
+
+---
+
+</div>
 
 ## 🌟 Key Features (v10)
 
@@ -24,10 +40,6 @@ The JIRA-AI agent is designed to handle natural language as if you were talking 
 | **Update Status** | "Move APP-123 to In Progress" | IssueKey: APP-123, TargetStatus: "In Progress" |
 | **Add Comment** | "Tell the team on KAN-5 that the API is ready" | IssueKey: KAN-5, Text: "the API is ready" |
 | **Assign User** | "Assign KAN-10 to Himanshu" | Calls `searchUser` -> extracts AccountId -> `updateIssue` |
-
-=======
-![JIRA-AI Dashboard Mockup](file:///Users/himanshu/.gemini/antigravity/brain/ba823c7d-d2e9-4a23-bcd1-17e74a2da7e3/jira_ai_dashboard_mockup_1773998591624.png)
-*Modern, Glassmorphic AI Command Center for Jira*
 
 A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.
 
