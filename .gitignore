@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+dist/
+build/
+*.js
+!frontend/src/components/**/*.js
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Misc
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
