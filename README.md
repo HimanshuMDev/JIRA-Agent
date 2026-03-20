@@ -41,6 +41,9 @@ The JIRA-AI agent is designed to handle natural language as if you were talking 
 | **Add Comment** | "Tell the team on KAN-5 that the API is ready" | IssueKey: KAN-5, Text: "the API is ready" |
 | **Assign User** | "Assign KAN-10 to Himanshu" | Calls `searchUser` -> extracts AccountId -> `updateIssue` |
 
+<img src="https://raw.githubusercontent.com/HimanshuMDev/JIRA-Agent/main/frontend/dashboard.png" width="100%" alt="JIRA-AI Dashboard Mockup">
+*Modern, Glassmorphic AI Command Center for Jira*
+
 A state-of-the-art, premium AI agent for Jira management. Built for speed, transparency, and a "WOW" SaaS experience.
 
 ## 🌟 Key Features (v10)
