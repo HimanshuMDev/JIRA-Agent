@@ -27,16 +27,7 @@ const getInitialSessionId = () => {
   return newId;
 };
 
-const parseIssueCards = (text: string): IssueCard[] => {
-  const keys = [...text.matchAll(/\b[A-Z][A-Z0-9]+-\d+\b/g)].map((m) => m[0]);
-  if (!keys.length) return [];
-  return [...new Set(keys)].slice(0, 4).map((key) => ({
-    key,
-    summary: "Refenced Jira Issue",
-    status: "Synced",
-    priority: "Medium"
-  }));
-};
+// Ghost cards removed as the AI now provides rich Markdown details.
 
 export const useChatStore = create<ChatState>((set, get) => ({
   // ... existing state ...
@@ -73,9 +64,10 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
     try {
       const data = await chatService.sendMessage(clean, sessionId);
-      set({ lastIntent: data.intent || "GENERAL_CHAT" });
+      const lastIntent = data.intent || "GENERAL_CHAT";
+      set({ lastIntent });
       
-      const assistantIssues = parseIssueCards(data.reply || "");
+      const assistantIssues: IssueCard[] = [];
       
       // Convert string steps to reasoning objects
       if (data.steps && data.steps.length > 0) {

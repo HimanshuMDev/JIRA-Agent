@@ -28,8 +28,9 @@ export class OrchestratorService {
     console.log(`\n🧭 [Orchestrator] Analyzing intent for: "${userMessage}"`);
 
     try {
+      const modelName = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
       const response = await this.ai.models.generateContent({
-          model: 'gemini-2.0-flash',
+          model: modelName,
           contents: `Analyze this user message and determine their goal. It MUST be one of: SEARCH_JIRA, CREATE_TICKET, UPDATE_TICKET, ADD_COMMENT, CLEAR_MEMORY, or GENERAL_CHAT. Message: "${userMessage}"`,
           config: {
               responseMimeType: "application/json",
@@ -71,6 +72,14 @@ export class OrchestratorService {
 
     } catch (error: any) {
        console.error("🧭 [Orchestrator] Fatal Error:", error.message || error);
+       
+       if (error.message?.includes('429') || error.status === 'RESOURCE_EXHAUSTED') {
+         return {
+           reply: "I've hit my API quota limit (429). Please try again in a few seconds or check your Gemini plan and billing details.",
+           intent: 'ERROR'
+         };
+       }
+
        return { 
          reply: "An error occurred in the Orchestrator layer: " + (error.message || "Unknown error"), 
          intent: 'ERROR' 

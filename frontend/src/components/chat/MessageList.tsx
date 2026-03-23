@@ -38,19 +38,7 @@ export const MessageList: React.FC<Props> = ({ messages, loading }) => {
           >
             <MessageBubble message={msg} />
 
-            {/* Reasoning Console v10 - Show for latest assistant message if steps exist */}
-            {idx === messages.length - 1 && msg.role === "assistant" && reasoningSteps.length > 0 && (
-              <ReasoningLog steps={reasoningSteps} />
-            )}
-
-            {/* Contextual Jira Cards v8 */}
-            {msg.issues && msg.issues.length > 0 && (
-              <div className="cards-row-v8">
-                {msg.issues.map((issue) => (
-                  <IssueCard key={issue.key} issue={issue} />
-                ))}
-              </div>
-            )}
+            {/* Execution logs and redundant ghost cards removed for a cleaner, premium UI. */}
           </motion.div>
         ))}
       </AnimatePresence>

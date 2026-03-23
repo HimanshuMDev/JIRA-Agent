@@ -44,13 +44,20 @@ export class JiraMcpServer {
   // -------------------------------------------------------------
   async executeJqlSearch(jql: string) {
     try {
-      console.log(`[Jira MCP] 🔍 Search JQL: ${jql}`);
-      // NOTE: The new /search/jql endpoint requires POST, not GET
+      let finalJql = jql;
+      // Jira API v3 fails on "unbounded" JQL (e.g. just "order by...").
+      // We must ensure there is always a base filter.
+      if (!jql || jql.toLowerCase().trim().startsWith('order by')) {
+          const filter = 'statusCategory != Done';
+          finalJql = jql ? `${filter} ${jql}` : filter;
+      }
+
+      console.log(`[Jira MCP] 🔍 Search JQL: ${finalJql}`);
       const endpoint = `${this.domain}/rest/api/3/search/jql`;
       const response = await axios.post(endpoint, {
-        jql: jql,
+        jql: finalJql,
         maxResults: 10,
-        fields: ['summary', 'status', 'assignee', 'priority', 'issuetype']
+        fields: ['summary', 'status', 'assignee', 'priority', 'issuetype', 'description', 'comment']
       }, {
         headers: this.getAuthHeaders()
       });
@@ -58,14 +65,33 @@ export class JiraMcpServer {
       const issues = response.data.issues || [];
       if (issues.length === 0) return [];
 
-      return issues.map((issue: any) => ({
-        id: issue.key,
-        summary: issue.fields.summary,
-        status: issue.fields.status?.name || 'Unknown',
-        assignee: issue.fields.assignee?.displayName || 'Unassigned',
-        priority: issue.fields.priority?.name || 'None',
-        type: issue.fields.issuetype?.name || 'Unknown'
-      }));
+      return issues.map((issue: any) => {
+        const descriptionADF = issue.fields.description;
+        // Simple extraction of text from ADF for the AI to read easily
+        let descriptionText = '';
+        if (descriptionADF && descriptionADF.content) {
+            descriptionText = descriptionADF.content
+                .map((p: any) => p.content ? p.content.map((t: any) => t.text).join('') : '')
+                .join('\n');
+        }
+
+        const comments = issue.fields.comment?.comments || [];
+        const lastComments = comments.slice(-3).map((c: any) => ({
+            author: c.author?.displayName || 'Unknown',
+            body: c.body?.content ? c.body.content.map((p: any) => p.content ? p.content.map((t: any) => t.text).join('') : '').join('\n') : 'Empty'
+        }));
+
+        return {
+          id: issue.key,
+          summary: issue.fields.summary,
+          status: issue.fields.status?.name || 'Unknown',
+          assignee: issue.fields.assignee?.displayName || 'Unassigned',
+          priority: issue.fields.priority?.name || 'None',
+          type: issue.fields.issuetype?.name || 'Unknown',
+          description: descriptionText,
+          comments: lastComments
+        };
+      });
     } catch (e: any) {
       const errorDetail = e.response?.data || e.message;
       console.error(`[Jira MCP] ❌ Search FAILED. Status: ${e.response?.status}. Details:`, JSON.stringify(errorDetail, null, 2));

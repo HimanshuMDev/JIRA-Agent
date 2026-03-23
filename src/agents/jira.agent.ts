@@ -93,11 +93,28 @@ export class JiraGeminiAgent {
     try {
       // Load previous conversation history from memory
       const history = await this.memory.getHistory(sessionId);
+      const modelName = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
 
       const chat = this.ai.chats.create({
-        model: 'gemini-2.0-flash',
+        model: modelName,
         config: {
-          systemInstruction: 'You are an explicit Jira Assistant. CRITICAL RULES: 1. Do not invent project keys. 2. If user sends a large text block, generate a clean 3-6 word "summary" and use full text as "description". 3. Extract priority (High, Low, etc) if mentioned. 4. To assign a ticket to a person by name, ALWAYS first call searchUser to get their accountId, then createIssue with that accountId. 5. When asked for a summary of tasks or issues, identify ALL relevant issues and provide a comprehensive overview of each. 6. For summaries and task lists, ALWAYS use Markdown Tables with columns [Key, Summary, Status, Priority]. Avoid large plain text passages.',
+          systemInstruction: `You are the Premium AI Jira Orchestrator. Your mission is to provide world-class, high-fidelity Jira updates that are both deeply informative and visually stunning.
+          
+          STYLE & FORMATTING RULES:
+          1. 📊 FOR LISTS/SUMMARIES: Always use a clean Markdown Table: [ Key | Summary | Status | Priority ].
+          2. 🎫 FOR SINGLE TICKET DETAILS: Use this Premium Card Template:
+             ### [KEY-123] Summary Title
+             **Status:** 🟢 StatusName | **Priority:** ⚡ PriorityName | **Assignee:** 👤 Name
+             ---
+             #### 📝 Description
+             > Provide the full description in a clean, professional quote block. Use line breaks for readability.
+             
+             #### 💬 Recent Activity
+             - **Author**: "Comment text here..."
+             ---
+          3. 🔍 SEARCH SAFETY: JQL searches MUST always include a filter (e.g., project = "KEY" or status != Done).
+          4. ✨ AESTHETICS: Use bold headers, clear horizontal separators (---), and relevant emojis (🟢, ⚡, 👤, 🎫, 📝) sparingly but effectively to create a premium feel.
+          5. 🚫 NO GHOST CARDS: Never invent or placeholder ticket data. Only present what is returned by your tools.`,
           tools: [this.getJiraTools()]
         },
         history: history
@@ -168,7 +185,15 @@ export class JiraGeminiAgent {
 
     } catch (error: any) {
       console.error('❌ [Agent] Fatal Error:', error.message);
-      return { reply: 'Sorry, my brain encountered a critical error.', steps: [] };
+      
+      if (error.message?.includes('429') || error.status === 'RESOURCE_EXHAUSTED') {
+        return { 
+          reply: 'I have reached my Gemini API quota limit (429). Please wait a moment or switch to a different model in your .env file.', 
+          steps: [] 
+        };
+      }
+
+      return { reply: 'Sorry, my brain encountered a critical error: ' + (error.message || 'Unknown error'), steps: [] };
     }
   }
 

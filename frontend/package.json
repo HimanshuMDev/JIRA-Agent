@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"npm run dev-backend --prefix ..\"",
+    "dev": "vite",
     "build": "tsc -p tsconfig.app.json && vite build",
     "preview": "vite preview"
   },

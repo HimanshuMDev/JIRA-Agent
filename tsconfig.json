@@ -17,13 +17,8 @@
 
     // Other Outputs
     "sourceMap": true,
-<<<<<<< HEAD
-    "declaration": true,
-    "declarationMap": true,
-=======
     "declaration": false,
     "declarationMap": false,
->>>>>>> 787c3b8 (feat: initial release of JIRA-AI Agent v10.2 (transparent reasoning & premium UI))
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
